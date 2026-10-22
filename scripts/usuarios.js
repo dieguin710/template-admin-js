@@ -18,7 +18,7 @@ const table = document.querySelector("#table-users-body")
 
 
 // Criar uma variável para guardar a linha que está sendo editada.
-// Exemplo: let linhaEmEdicao = null;
+let linhaEmEdicao = null;
 
 
 
@@ -69,37 +69,52 @@ function saveData(e) {
 
   table.appendChild(tr)
   // Verificar se existe uma linha em edição.
-
+  
   //if (/* verificar se existe uma linha em edição */) {
-
+  if (linhaEmEdicao !== null) {
     // Recuperar os dados da linha que será atualizada.
-
+    let celulas = linhaEmEdicao.querySelectorAll("td")
     // Atualizar o nome, o e-mail e o status de administrador
     // nas células correspondentes da tabela.
-
+    celulas[1].textContent = userName.value
+    celulas[2].textContent = userEmail.value
+    celulas[3].textContent = userAdmin.checked ? "Sim" : "Não"
+    
     // Limpar a variável de controle de edição.
-
+    linhaEmEdicao = null
     // Exibir uma mensagem de atualização bem-sucedida.
-
-  //} else {
+    alert("Usuário atualizado com sucesso!")
+  } else {
 
     // Criar um novo elemento HTML <tr> para a tabela.
+    tr = document.createElement("tr")
 
     // Inserir as células com:
     // imagem, nome, e-mail, administrador e ações.
+    tr.innerHTML = `
+      <td>Foto</td>
+      <td>${name}</td>
+      <td>${email}</td>
+      <td>${admin === "sim" ? "Sim" : "Não"}</td>
+      <td>
+        <button class="edit-button">Editar</button>
+        <button class="delete-button">Excluir</button>
+      </td>
+    `;
 
     // Criar os botões Editar e Excluir.
-
+  const editButton = document.createElement("button")
+    editButton.textContent = "Editar"
+  const delButton = document.createElement("button")
+    delButton.textContent = "Excluir"
     // Adicionar um evento de clique ao botão Editar.
-
+  editButton.addEventListener("click", editar)
     // Adicionar um evento de clique ao botão Excluir.
-
+  delButton.addEventListener("click", deletar)
     // Adicionar a nova linha ao corpo da tabela.
-
-  //}
-
+  table.appendChild(tr)
   // Atualizar as estatísticas do painel administrativo.
-
+  
   // Limpar os campos do formulário.
 }
 
